@@ -363,6 +363,11 @@ braces@^3.0.2:
   dependencies:
     fill-range "^7.0.1"
 
+bun-types@latest:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/bun-types/-/bun-types-1.0.3.tgz#a39cab751be5c881bf757afc5d9e9c7ff7a797d8"
+  integrity sha512-XlyKVdYCHa7K5PHYGcwOVOrGE/bMnLS51y7zFA3ZAAXyiQ6dTaNXNCWTTufgII/6ruN770uhAXphQmzvU/r2fQ==
+
 callsites@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/callsites/-/callsites-3.1.0.tgz#b3630abd8943432f54b3f0519238e33cd7df2f73"
@@ -1293,6 +1298,11 @@ uri-js@^4.2.2:
   integrity sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==
   dependencies:
     punycode "^2.1.0"
+
+vanjs-core@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/vanjs-core/-/vanjs-core-1.2.1.tgz#69770789a7d366a05f4b6b815e450543ca015eb3"
+  integrity sha512-YzCu96dEAqBhZtCnU2gXOh+DRriS1G/+GSTUOkg0EIM+5lluxF88Yx8KnbljWtxUyhjIJHGRnTNS0+QbVF7Fhg==
 
 vite-tsconfig-paths@^4.2.0:
   version "4.2.1"
