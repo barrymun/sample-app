@@ -965,6 +965,11 @@ mimic-fn@^4.0.0:
   resolved "https://registry.yarnpkg.com/mimic-fn/-/mimic-fn-4.0.0.tgz#60a90550d5cb0b239cca65d893b1a53b29871ecc"
   integrity sha512-vqiC06CuhBTUdZH+RYl8sFrL096vA45Ok5ISO6sE/Mr1jRbGH4Csnhi8f3wKVl7x8mO4Au7Ir9D3Oyv1VYMFJw==
 
+mini-van-plate@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/mini-van-plate/-/mini-van-plate-0.5.0.tgz#e3b1291e2856047d87ac58479d2576aec286721e"
+  integrity sha512-c/nIJq35huo/fM0Wu6ec7yxS8622+nl7ShE3YWNKaigKoyuPYZkkl/ax95NmAbuxszMnAkiikFEkztV2sQHKkA==
+
 minimatch@^3.0.5, minimatch@^3.1.1, minimatch@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.1.2.tgz#19cd194bfd3e428f049a70817c038d89ab4be35b"
