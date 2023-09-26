@@ -1,13 +1,28 @@
 {
   "name": "ssr",
+  "private": true,
   "version": "1.0.0",
   "license": "MIT",
+  "workspaces":[
+    "client"
+  ],
+  "scripts": {
+    "prepare": "husky install",
+    "pre-commit": "lint-staged",
+    "client-dev": "yarn workspace ssr-client dev"
+  },
   "lint-staged": {
-    "src/**/*.ts": [
-      "prettier --write \"src/**/*.ts\""
+    "client/src/**/*.ts": [
+      "prettier --write \"client/src/**/*.ts\""
     ]
   },
-  "scripts": {
-    "prepare": "husky install"
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
+    "@typescript-eslint/parser": "^6.7.0",
+    "eslint": "^8.49.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^14.0.1",
+    "prettier": "3.0.3",
+    "typescript": "^5.2.2"
   }
 }
