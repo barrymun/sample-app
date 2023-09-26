@@ -15,6 +15,9 @@
   "lint-staged": {
     "client/src/**/*.ts": [
       "prettier --write \"client/src/**/*.ts\""
+    ],
+    "server/src/**/*.ts": [
+      "prettier --write \"server/src/**/*.ts\""
     ]
   },
   "devDependencies": {
