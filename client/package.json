@@ -1,0 +1,22 @@
+{
+  "name": "ssr-client",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
+    "@typescript-eslint/parser": "^6.7.0",
+    "eslint": "^8.49.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^14.0.1",
+    "prettier": "3.0.3",
+    "typescript": "^5.2.2",
+    "vite": "^4.4.5",
+    "vite-tsconfig-paths": "^4.2.0"
+  }
+}

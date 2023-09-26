@@ -1,0 +1,13 @@
+{
+  "name": "ssr",
+  "version": "1.0.0",
+  "license": "MIT",
+  "lint-staged": {
+    "src/**/*.ts": [
+      "prettier --write \"src/**/*.ts\""
+    ]
+  },
+  "scripts": {
+    "prepare": "husky install"
+  }
+}
