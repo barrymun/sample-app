@@ -14,14 +14,17 @@
     "client-dev": "yarn workspace ssr-client dev"
   },
   "lint-staged": {
-    "client/src/**/*.ts": [
-      "prettier --write \"client/src/**/*.+(ts|tsx)\""
+    "client/src/**/*.{ts,tsx}": [
+      "prettier --write 'client/src/**/*.{ts,tsx}'",
+      "eslint --fix --config client/.eslintrc.json 'client/src/**/*.{ts,tsx}'"
     ],
     "server/src/**/*.ts": [
-      "prettier --write \"server/src/**/*.ts\""
+      "prettier --write server/src/**/*.ts",
+      "eslint --fix --config server/.eslintrc.json server/src/**/*.ts"
     ],
     "shared/src/**/*.ts": [
-      "prettier --write \"shared/src/**/*.ts\""
+      "prettier --write shared/src/**/*.ts",
+      "eslint --fix --config shared/.eslintrc.json shared/src/**/*.ts"
     ]
   },
   "devDependencies": {
