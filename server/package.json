@@ -1,17 +1,21 @@
 {
-  "name": "ssr-server",
+  "name": "server",
   "private": true,
   "version": "0.0.0",
   "license": "MIT",
   "module": "index.ts",
   "type": "module",
   "devDependencies": {
+    "@types/finalhandler": "^1.2.1",
+    "@types/serve-static": "^1.15.3",
     "bun-types": "latest"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
   "dependencies": {
-    "mini-van-plate": "^0.5.0"
+    "finalhandler": "^1.2.0",
+    "mini-van-plate": "^0.5.0",
+    "serve-static": "^1.15.0"
   }
 }
