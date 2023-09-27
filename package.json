@@ -15,7 +15,7 @@
   },
   "lint-staged": {
     "client/src/**/*.ts": [
-      "prettier --write \"client/src/**/*{.ts|.tsx}\""
+      "prettier --write \"client/src/**/*.+(ts|tsx)\""
     ],
     "server/src/**/*.ts": [
       "prettier --write \"server/src/**/*.ts\""
