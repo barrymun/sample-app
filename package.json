@@ -19,6 +19,9 @@
     ],
     "server/src/**/*.ts": [
       "prettier --write \"server/src/**/*.ts\""
+    ],
+    "shared/src/**/*.ts": [
+      "prettier --write \"shared/src/**/*.ts\""
     ]
   },
   "devDependencies": {

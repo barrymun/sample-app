@@ -14,3 +14,11 @@ van.hydrate(document.getElementById("basic-counter")!, (dom) =>
     init: Number(dom.getAttribute("data-counter")),
   }),
 );
+
+van.hydrate(document.getElementById("styled-counter")!, (dom) =>
+  Counter({
+    van,
+    id: dom.id,
+    init: Number(dom.getAttribute("data-counter")),
+  }),
+);

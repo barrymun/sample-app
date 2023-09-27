@@ -25,12 +25,16 @@ createServer((req, res) => {
   res.end(
     van.html(
       head(
-        link({ rel: "icon", href: "logo.svg" }),
+        meta({ charset: "utf-8" }),
+        // link({ rel: "icon", href: "logo.svg" }),
+        link({ rel: "icon", type: "image/svg+xml", href: "../../client/dist/vite.svg" }),
+        meta({ name: "viewport", content: "width=device-width, initial-scale=1.0" }),
         title("SSR and Hydration Example"),
-        meta({ name: "viewport", content: "width=device-width, initial-scale=1" }),
+        link({ rel: "stylesheet", href: "../../client/dist/assets/index-8987049b.css" }),
       ),
       body(
-        script({ type: "text/javascript", src: `dist/client.bundle${env === "dev" ? "" : ".min"}.js`, defer: true }),
+        // script({ type: "text/javascript", src: `dist/client.bundle${env === "dev" ? "" : ".min"}.js`, defer: true }),
+        script({ type: "text/javascript", src: `../../client/dist/assets/index-f10dbcaf.js`, defer: true }),
         h1("Hello Components"),
         div({ id: "hello-container" }, Hello({ van })),
         h1("Counter Components"),

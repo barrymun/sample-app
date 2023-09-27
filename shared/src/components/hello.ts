@@ -1,17 +1,16 @@
-import { VanObj } from "mini-van-plate/shared"
+import { VanObj } from "mini-van-plate/shared";
 
 interface Props {
-  van: VanObj
+  van: VanObj;
 }
 
-export const Hello = ({van} : Props) => {
-  const {div, li, p, ul} = van.tags
+export const Hello = ({ van }: Props) => {
+  const { div, li, p, ul } = van.tags;
 
-  const fromServer = typeof window === "undefined"
+  const fromServer = typeof window === "undefined";
+
   return div(
     p(() => `👋Hello (from ${fromServer ? "server" : "client"})`),
-    ul(
-      li("🗺️World"),
-    ),
-  )
+    ul(li("🗺️World")),
+  );
 };
