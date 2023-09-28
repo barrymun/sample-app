@@ -11,7 +11,9 @@
   "scripts": {
     "prepare": "husky install",
     "pre-commit": "lint-staged",
-    "client-dev": "yarn workspace ssr-client dev"
+    "client-dev": "yarn workspace ssr-client dev",
+    "docker-up": "docker-compose up -d",
+    "docker-down": "docker-compose down -v"
   },
   "lint-staged": {
     "client/src/**/*.{ts,tsx}": [
