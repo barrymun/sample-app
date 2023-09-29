@@ -1,5 +1,5 @@
 import { Auth0Provider } from "@auth0/auth0-react";
-import { useEffect, type ReactElement, type ReactNode, useState } from "react";
+import { type ReactElement, type ReactNode } from "react";
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
 
@@ -16,29 +16,20 @@ type AppPropsWithLayout = AppProps & {
 };
 
 export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-  // Use the layout defined at the page level, if available
-  const getLayout = Component.getLayout ?? ((page) => page);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [providerConfig, setProviderConfig] = useState<any>(undefined);
+  const providerConfig = {
+    domain: config.auth0Domain,
+    clientId: config.auth0ClientId,
+    // onRedirectCallback,
+    authorizationParams: {
+      // redirect_uri: window.location.origin,
+      redirect_uri: "http://localhost:3000/",
+      // ...(config.audience ? { audience: config.audience } : null),
+    },
+  };
 
-  useEffect(() => {
-    const auth0ProviderConfig = {
-      domain: config.auth0Domain,
-      clientId: config.auth0ClientId,
-      // onRedirectCallback,
-      authorizationParams: {
-        redirect_uri: window?.location.origin,
-        // ...(config.audience ? { audience: config.audience } : null),
-      },
-    };
-    setProviderConfig(auth0ProviderConfig);
-  }, []);
-
-  if (!providerConfig) return null;
-
-  return getLayout(
+  return (
     <Auth0Provider {...providerConfig}>
       <Component {...pageProps} />
-    </Auth0Provider>,
+    </Auth0Provider>
   );
 }

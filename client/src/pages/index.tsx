@@ -1,15 +1,9 @@
-import type { ReactElement } from "react";
-import { Layout } from "app/components/layout";
-// import NestedLayout from '../components/nested-layout'
-import type { NextPageWithLayout } from "./_app";
+import { useAuth0 } from "@auth0/auth0-react";
 
-const Page: NextPageWithLayout = () => {
+export default function Home() {
+  const { user, isAuthenticated, isLoading } = useAuth0();
+  console.log({ user, isAuthenticated, isLoading });
   return <p>hello world</p>;
-};
+}
 
-Page.getLayout = function getLayout(page: ReactElement) {
-  console.log("index");
-  return <Layout>{page}</Layout>;
-};
-
-export default Page;
+export { Home };

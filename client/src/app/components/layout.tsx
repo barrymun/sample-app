@@ -3,7 +3,6 @@
 // import Footer from './footer'
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  console.log("layout");
   // const { data, error } = useSWR('/api/navigation', fetcher)
 
   // if (error) return <div>Failed to load</div>
