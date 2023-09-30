@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { LoginButton, LogoutButton } from "app/components";
-import { useAuth } from "app/hooks/use-auth";
+import { useAuth } from "app/hooks";
 
 export default function Home() {
   const { user, error, isLoading } = useAuth();
