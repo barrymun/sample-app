@@ -1,8 +1,11 @@
+import { useLazyQuery } from "@apollo/client/react";
 import { useUser, type UserProfile } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/router";
-import React, { ReactElement, useContext, createContext, useMemo, useEffect } from "react";
+import React, { ReactElement, useContext, createContext, useMemo, useEffect, useCallback } from "react";
 
 import { Loading } from "app/components";
+import { GET_USER_BY_EMAIL } from "app/graphql/users";
+import { Users } from "codegen/codegen";
 
 type AuthContextProps = {
   user?: UserProfile;
@@ -15,12 +18,23 @@ const AuthContext = createContext<AuthContextProps>({
 });
 
 type AuthProviderProps = React.PropsWithChildren<AuthContextProps>;
-
 type UseConfig = () => AuthContextProps;
 
 const AuthProvider = ({ children }: AuthProviderProps): ReactElement<AuthContextProps> => {
   const { user, error, isLoading } = useUser();
   const router = useRouter();
+
+  const [getUserByEmail] = useLazyQuery<Users>(GET_USER_BY_EMAIL);
+
+  const getUser = useCallback(
+    async () => {
+      if (!user) return;
+      const res = await getUserByEmail({ variables: { email: user.email } });
+      console.log(res.data?.email);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [user],
+  );
 
   useEffect(() => {
     // we don't want to keep redirecting to login if we're already there
@@ -31,6 +45,9 @@ const AuthProvider = ({ children }: AuthProviderProps): ReactElement<AuthContext
     if (!isLoading && (error || !user)) {
       router.push("/login");
     }
+
+    getUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, error, isLoading]);
 
   const authContextProviderValue = useMemo(() => ({ user, error, isLoading }), [user, error, isLoading]);

@@ -11,9 +11,10 @@
   "scripts": {
     "prepare": "husky install",
     "pre-commit": "lint-staged",
-    "client-dev": "yarn workspace ssr-client dev",
+    "client-dev": "yarn workspace client dev",
     "docker-up": "docker-compose up -d",
-    "docker-down": "docker-compose down -v"
+    "docker-down": "docker-compose down -v",
+    "codegen": "yarn workspace client graphql-codegen"
   },
   "lint-staged": {
     "client/src/**/*.{ts,tsx}": [

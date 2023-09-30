@@ -1,0 +1,10 @@
+overwrite: true
+schema:
+  - 'http://localhost:9000/v1/graphql':
+      headers:
+        x-hasura-admin-secret: ${HASURA_GRAPHQL_ADMIN_SECRET}
+generates:
+  src/codegen/codegen.ts:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'

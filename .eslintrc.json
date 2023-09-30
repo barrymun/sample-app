@@ -6,6 +6,7 @@
     "project": "./tsconfig.json"
   },
   "plugins": ["@typescript-eslint"],
+  "ignorePatterns": ["codegen/"],
   "rules": {
     "max-len": ["error", { "code": 120 }],
     "no-unused-vars": "off",
