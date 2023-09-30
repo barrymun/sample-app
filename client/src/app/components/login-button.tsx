@@ -1,9 +1,5 @@
-// import React from "react";
+const LoginButton = () => {
+  return <a href="/api/auth/login">Login</a>;
+};
 
-// const LoginButton = () => {
-//   const { loginWithRedirect } = useAuth0();
-
-//   return <button onClick={() => loginWithRedirect()}>Log In</button>;
-// };
-
-// export { LoginButton };
+export { LoginButton };

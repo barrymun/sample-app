@@ -1,9 +1,5 @@
-// import React from "react";
+const LogoutButton = () => {
+  return <a href="/api/auth/logout">Logout</a>;
+};
 
-// const LogoutButton = () => {
-//   const { logout } = useAuth0();
-
-//   return <button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>Log Out</button>;
-// };
-
-// export { LogoutButton };
+export { LogoutButton };
