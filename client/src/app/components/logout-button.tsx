@@ -1,5 +1,7 @@
+import Link from "next/link";
+
 const LogoutButton = () => {
-  return <a href="/api/auth/logout">Logout</a>;
+  return <Link href="/api/auth/logout">Logout</Link>;
 };
 
 export { LogoutButton };

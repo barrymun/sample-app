@@ -3,10 +3,6 @@ import React from "react";
 
 import loading from "assets/loading.svg";
 
-const Loading = () => (
-  <div className="spinner">
-    <Image src={loading.src} alt="Loading" />
-  </div>
-);
+const Loading = () => <Image src={loading.src} width={loading.width} height={loading.height} alt="Loading" />;
 
 export { Loading };
