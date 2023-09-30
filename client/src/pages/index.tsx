@@ -1,13 +1,11 @@
 import Link from "next/link";
 
-import { useUser } from "@auth0/nextjs-auth0/client";
-import { Loading, LoginButton, LogoutButton } from "app/components";
+import { LoginButton, LogoutButton } from "app/components";
+import { useAuth } from "app/hooks/use-auth";
 
 export default function Home() {
-  const { user, error, isLoading } = useUser();
+  const { user, error, isLoading } = useAuth();
   console.log(user, error, isLoading);
-
-  if (isLoading) return <Loading />;
 
   return (
     <div>
