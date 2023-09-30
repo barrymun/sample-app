@@ -1,9 +1,7 @@
-import { Auth0Provider } from "@auth0/auth0-react";
+import { UserProvider } from "@auth0/nextjs-auth0/client";
 import { type ReactElement, type ReactNode } from "react";
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
-
-import { config } from "config";
 
 import "assets/globals.css";
 
@@ -16,20 +14,9 @@ type AppPropsWithLayout = AppProps & {
 };
 
 export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-  const providerConfig = {
-    domain: config.auth0Domain,
-    clientId: config.auth0ClientId,
-    // onRedirectCallback,
-    authorizationParams: {
-      // redirect_uri: window.location.origin,
-      redirect_uri: "http://localhost:3000/",
-      // ...(config.audience ? { audience: config.audience } : null),
-    },
-  };
-
   return (
-    <Auth0Provider {...providerConfig}>
+    <UserProvider>
       <Component {...pageProps} />
-    </Auth0Provider>
+    </UserProvider>
   );
 }
