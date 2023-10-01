@@ -1,11 +1,11 @@
-import { useLazyQuery } from "@apollo/client/react";
+// import { useLazyQuery } from "@apollo/client/react";
 import { useUser, type UserProfile } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/router";
 import React, { ReactElement, useContext, createContext, useMemo, useEffect, useCallback } from "react";
 
 import { Loading } from "app/components";
-import { GET_USER_BY_EMAIL } from "app/graphql/users";
-import { Users } from "codegen/codegen";
+// import { GET_USER_BY_EMAIL } from "app/graphql/users";
+// import { Users } from "codegen/codegen";
 
 type AuthContextProps = {
   user?: UserProfile;
@@ -24,13 +24,19 @@ const AuthProvider = ({ children }: AuthProviderProps): ReactElement<AuthContext
   const { user, error, isLoading } = useUser();
   const router = useRouter();
 
-  const [getUserByEmail] = useLazyQuery<Users>(GET_USER_BY_EMAIL);
+  // const [getUserByEmail] = useLazyQuery<Users>(GET_USER_BY_EMAIL);
 
   const getUser = useCallback(
     async () => {
       if (!user) return;
-      const res = await getUserByEmail({ variables: { email: user.email } });
-      console.log(res.data?.email);
+
+      await fetch("http://localhost:3000/api/server");
+      // const response = await fetch('http://localhost:3000/api/server');
+      // const data = await response.json();
+      // console.log(data)
+
+      // const res = await getUserByEmail({ variables: { email: user.email } });
+      // console.log(res.data?.email);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [user],

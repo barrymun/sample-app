@@ -1,6 +1,8 @@
 import express from "express";
-const app = express();
+import cors from "cors";
 import { auth, requiredScopes } from "express-oauth2-jwt-bearer";
+
+const app = express();
 
 // Authorization middleware. When used, the Access Token must
 // exist and be verified against the Auth0 JSON Web Key Set.
@@ -9,8 +11,14 @@ const checkJwt = auth({
   issuerBaseURL: `https://dev-uyysrdqjsakrpapo.eu.auth0.com/`,
 });
 
+const corsOptions = {
+  origin: "http://localhost:3000",
+};
+app.use(cors(corsOptions));
+
 // This route doesn't need authentication
 app.get("/api/public", function (req, res) {
+  console.log("/api/public");
   res.json({
     message: "Hello from a public endpoint! You don't need to be authenticated to see this.",
   });
@@ -18,6 +26,7 @@ app.get("/api/public", function (req, res) {
 
 // This route needs authentication
 app.get("/api/private", checkJwt, function (req, res) {
+  console.log("/api/private");
   res.json({
     message: "Hello from a private endpoint! You need to be authenticated to see this.",
   });
