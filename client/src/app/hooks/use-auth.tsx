@@ -30,10 +30,24 @@ const AuthProvider = ({ children }: AuthProviderProps): ReactElement<AuthContext
     async () => {
       if (!user) return;
 
-      await fetch("http://localhost:3000/api/server");
-      // const response = await fetch('http://localhost:3000/api/server');
-      // const data = await response.json();
-      // console.log(data)
+      await fetch("http://localhost:3001/authenticate", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          email: user.email,
+        }),
+      });
+
+      await fetch("http://localhost:3001/private", {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+        },
+        credentials: "include",
+      });
 
       // const res = await getUserByEmail({ variables: { email: user.email } });
       // console.log(res.data?.email);
