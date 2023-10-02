@@ -6,20 +6,21 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const allowedOrigins = ["http://localhost:3000"];
+// const allowedOrigins: string[] = ["http://localhost:3000"];
 
 const app = express();
 const corsOptions = {
-  origin: function (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) {
-    if (!origin) {
-      return callback(null, true);
-    }
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg: string = "The CORS policy for this site does not allow access from the specified Origin.";
-      return callback(new Error(msg), false);
-    }
-    return callback(null, true);
-  },
+  // origin: function (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) {
+  //   if (!origin) {
+  //     return callback(null, true);
+  //   }
+  //   if (allowedOrigins.indexOf(origin) === -1) {
+  //     const msg: string = "The CORS policy for this site does not allow access from the specified Origin.";
+  //     return callback(new Error(msg), false);
+  //   }
+  //   return callback(null, true);
+  // },
+  origin: "http://localhost:3000",
   credentials: true,
 };
 app.use(cors(corsOptions));
