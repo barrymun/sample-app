@@ -26,61 +26,77 @@ const corsOptions = {
   credentials: true,
 };
 app.use(cors(corsOptions));
-app.use(cookieParser()); // Don't forget to use cookieParser middleware to populate req.cookies
+app.use(cookieParser()); // To populate req.cookies
 app.use(express.json()); // To parse JSON requests
 
-type User = {
-  email: string;
-};
-
-interface RequestWithUser extends Request {
-  user: User;
+interface RequestWithJWTPayload extends Request {
+  user: {
+    given_name: string;
+    family_name: string;
+    nickname: string;
+    name: string;
+    picture: string;
+    locale: string;
+    updated_at: string;
+    email: string;
+    email_verified: true;
+    iss: string;
+    aud: string;
+    iat: number;
+    exp: number;
+    sub: string;
+    acr: string;
+    amr: string[];
+    sid: string;
+    nonce: string;
+  };
 }
 
 const jwks = jose.createRemoteJWKSet(new URL(jwksUri));
 
-const verifyAccessToken = async (req: Request, res: Response, next: NextFunction) => {
+const verifyAndDecodeToken = async (token: string): Promise<jose.JWTPayload | null> => {
   try {
-    const token = req.headers.authorization?.split(" ")[1];
-    console.log(token);
-
-    if (!token) {
-      res.status(401).send("Authorization token is required");
-      return;
-    }
-
-    await jose.jwtVerify(token, jwks);
-    next();
+    const r = await jose.jwtVerify(token, jwks);
+    return r.payload;
   } catch (error) {
-    console.log(error);
-    res.status(401).send("Invalid token");
+    return null;
   }
 };
 
-const createToken = (email: string) => {
-  const payload = { email };
-  const token = jwt.sign(payload, process.env.JWT_SECRET!, { expiresIn: "1h" });
+const generateAuthToken = (payload: jose.JWTPayload) => {
+  const token = jwt.sign(payload, process.env.JWT_SECRET!);
   return token;
 };
 
-// const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
-//   const token = req.cookies.token; // Assuming the token is sent as a cookie
-//   if (!token) return res.status(401).send("Access Denied");
+const authenticateRequest = (req: Request, res: Response, next: NextFunction) => {
+  const token = req.cookies.auth; // Assuming the token is sent as a cookie
+  if (!token) {
+    return res.status(401).send("Access Denied");
+  }
 
-//   try {
-//     const verified = jwt.verify(token, process.env.JWT_SECRET!) as User;
-//     (req as RequestWithUser).user = verified; // Add user payload to request object
-//     next(); // Proceed to the next middleware/route handler
-//   } catch (err) {
-//     res.status(400).send("Invalid Token");
-//   }
-// };
+  try {
+    const verified = jwt.verify(token, process.env.JWT_SECRET!) as RequestWithJWTPayload["user"];
+    (req as RequestWithJWTPayload).user = verified; // Add user payload to request object
+    next(); // Proceed to the next middleware/route handler
+  } catch (err) {
+    res.status(400).send("Invalid Token");
+  }
+};
 
-app.post("/authenticate", (req, res) => {
-  const email = req.body.email;
-  const token = createToken(email);
+app.post("/authenticate", async (req, res) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) {
+    return res.status(401).send("Access Denied");
+  }
 
-  res.cookie("token", token, {
+  const token = authHeader.split(" ")[1];
+  const payload = await verifyAndDecodeToken(token);
+  if (!payload) {
+    return res.status(400).send("Invalid Token");
+  }
+
+  const authToken = generateAuthToken(payload);
+  res.cookie("auth", authToken, {
     httpOnly: true, // this will prevent the token from being accessed by JavaScript
     // secure: process.env.NODE_ENV === 'production', // this will send the cookie over HTTPS only
     maxAge: 3600000, // this sets the cookie to expire in 1 hour
@@ -103,11 +119,10 @@ app.get("/public", (req, res) => {
 });
 
 // This route needs authentication
-// app.get("/private", authenticateToken, (req, res) => {
-app.get("/private", verifyAccessToken, (req, res) => {
-  const reqWithUser = req as RequestWithUser;
+app.get("/private", authenticateRequest, (req, res) => {
+  const reqWithUser = req as RequestWithJWTPayload;
   res.json({
-    message: `Hello ${reqWithUser.user.email}. You should only see this if you're authenticated.`,
+    message: `Hello ${reqWithUser.user.name}. You should only see this if you're authenticated.`,
   });
 });
 
