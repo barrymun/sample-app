@@ -3,10 +3,12 @@ import cors from "cors";
 import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
+import * as jose from "jose";
 
 dotenv.config();
 
 // const allowedOrigins: string[] = ["http://localhost:3000"];
+const jwksUri: string = "https://dev-uyysrdqjsakrpapo.eu.auth0.com/.well-known/jwks.json";
 
 const app = express();
 const corsOptions = {
@@ -35,24 +37,44 @@ interface RequestWithUser extends Request {
   user: User;
 }
 
+const jwks = jose.createRemoteJWKSet(new URL(jwksUri));
+
+const verifyAccessToken = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const token = req.headers.authorization?.split(" ")[1];
+    console.log(token);
+
+    if (!token) {
+      res.status(401).send("Authorization token is required");
+      return;
+    }
+
+    await jose.jwtVerify(token, jwks);
+    next();
+  } catch (error) {
+    console.log(error);
+    res.status(401).send("Invalid token");
+  }
+};
+
 const createToken = (email: string) => {
   const payload = { email };
   const token = jwt.sign(payload, process.env.JWT_SECRET!, { expiresIn: "1h" });
   return token;
 };
 
-const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
-  const token = req.cookies.token; // Assuming the token is sent as a cookie
-  if (!token) return res.status(401).send("Access Denied");
+// const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
+//   const token = req.cookies.token; // Assuming the token is sent as a cookie
+//   if (!token) return res.status(401).send("Access Denied");
 
-  try {
-    const verified = jwt.verify(token, process.env.JWT_SECRET!) as User;
-    (req as RequestWithUser).user = verified; // Add user payload to request object
-    next(); // Proceed to the next middleware/route handler
-  } catch (err) {
-    res.status(400).send("Invalid Token");
-  }
-};
+//   try {
+//     const verified = jwt.verify(token, process.env.JWT_SECRET!) as User;
+//     (req as RequestWithUser).user = verified; // Add user payload to request object
+//     next(); // Proceed to the next middleware/route handler
+//   } catch (err) {
+//     res.status(400).send("Invalid Token");
+//   }
+// };
 
 app.post("/authenticate", (req, res) => {
   const email = req.body.email;
@@ -81,7 +103,8 @@ app.get("/public", (req, res) => {
 });
 
 // This route needs authentication
-app.get("/private", authenticateToken, (req, res) => {
+// app.get("/private", authenticateToken, (req, res) => {
+app.get("/private", verifyAccessToken, (req, res) => {
   const reqWithUser = req as RequestWithUser;
   res.json({
     message: `Hello ${reqWithUser.user.email}. You should only see this if you're authenticated.`,
