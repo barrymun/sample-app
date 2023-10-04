@@ -105,12 +105,6 @@ app.post("/authenticate", async (req, res) => {
   res.status(200).send("OK");
 });
 
-app.get("/", (req, res) => {
-  res.json({
-    message: "Hello",
-  });
-});
-
 // This route doesn't need authentication
 app.get("/public", (req, res) => {
   res.json({
