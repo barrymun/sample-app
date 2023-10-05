@@ -9,9 +9,3 @@ export type NextPageWithLayout<P = Record<string, never>, IP = P> = NextPage<P, 
 export type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
-
-export type Credentials = {
-  access_token: string;
-  token_type: string;
-  expires_in: number;
-};
