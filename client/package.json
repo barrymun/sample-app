@@ -12,9 +12,9 @@
     "@apollo/client": "^3.8.4",
     "@auth0/nextjs-auth0": "^3.1.0",
     "graphql": "^16.8.1",
-    "next": "latest",
-    "react": "latest",
-    "react-dom": "latest"
+    "next": "^13.5.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.0",
@@ -22,11 +22,11 @@
     "@graphql-codegen/typescript": "^4.0.1",
     "@graphql-codegen/typescript-operations": "^4.0.1",
     "@types/graphql": "^14.5.0",
-    "@types/node": "latest",
-    "@types/react": "latest",
-    "@types/react-dom": "latest",
-    "eslint": "latest",
-    "eslint-config-next": "latest",
+    "@types/node": "^20.8.2",
+    "@types/react": "^18.2.25",
+    "@types/react-dom": "^18.2.10",
+    "eslint": "^8.51.0",
+    "eslint-config-next": "^13.5.4",
     "typescript": "^5.2.2"
   }
 }
