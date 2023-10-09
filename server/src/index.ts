@@ -6,39 +6,22 @@ import dotenv from "dotenv";
 import crypto from "crypto";
 import { type RedisClientType, createClient } from "redis";
 import sgMail from "@sendgrid/mail";
+import { AuthenticatedRequest } from "utils/types";
 
 dotenv.config();
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
 
-// const allowedOrigins: string[] = ["http://localhost:3000"];
-
 let redisClient: RedisClientType;
 
 const app = express();
 const corsOptions = {
-  // origin: function (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) {
-  //   if (!origin) {
-  //     return callback(null, true);
-  //   }
-  //   if (allowedOrigins.indexOf(origin) === -1) {
-  //     const msg: string = "The CORS policy for this site does not allow access from the specified Origin.";
-  //     return callback(new Error(msg), false);
-  //   }
-  //   return callback(null, true);
-  // },
   origin: "http://localhost:3000",
   credentials: true,
 };
 app.use(cors(corsOptions));
 app.use(cookieParser()); // To populate req.cookies
 app.use(express.json()); // To parse JSON requests
-
-interface AuthenticatedRequest extends Request {
-  user: {
-    email: string;
-  };
-}
 
 const generateRandomHash = (): string => {
   return crypto.randomBytes(64).toString("hex");
@@ -57,7 +40,7 @@ const authenticateRequest = (req: Request, res: Response, next: NextFunction) =>
 
   try {
     const verified = jwt.verify(token, process.env.JWT_SECRET!) as AuthenticatedRequest["user"];
-    (req as AuthenticatedRequest).user = verified; // Add user payload to request object
+    (req as unknown as AuthenticatedRequest).user = verified; // Add user payload to request object
     next(); // Proceed to the next middleware/route handler
   } catch (err) {
     res.status(400).send("Invalid Token");
@@ -113,7 +96,7 @@ app.get("/authenticate", async (req, res) => {
 });
 
 app.get("/session", authenticateRequest, async (req, res) => {
-  const reqWithUser = req as AuthenticatedRequest;
+  const reqWithUser = req as unknown as AuthenticatedRequest;
   res.json(reqWithUser.user);
 });
 
@@ -131,7 +114,7 @@ app.get("/public", async (req, res) => {
 
 // This route needs authentication
 app.get("/private", authenticateRequest, async (req, res) => {
-  const reqWithUser = req as AuthenticatedRequest;
+  const reqWithUser = req as unknown as AuthenticatedRequest;
   res.json({
     message: `Hello ${reqWithUser.user.email}. You should only see this if you're authenticated.`,
   });
