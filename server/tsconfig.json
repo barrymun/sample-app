@@ -10,10 +10,7 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "moduleResolution": "node",
-    "baseUrl": "./",
-    "paths": {
-      "*": ["src/*"],
-    },
+    "baseUrl": "src/",
     "types": ["node"],
   },
   "include": ["src/**/*.ts"],
