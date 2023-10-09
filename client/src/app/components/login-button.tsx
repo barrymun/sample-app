@@ -5,9 +5,8 @@ const LoginButton = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(email);
 
-    const r = await fetch("http://localhost:3001/send-email", {
+    await fetch("http://localhost:3001/send-email", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -15,7 +14,6 @@ const LoginButton = () => {
       credentials: "include",
       body: JSON.stringify({ email }),
     });
-    console.log(await r.text());
   };
 
   return (

@@ -4,13 +4,13 @@ import { LoginButton, LogoutButton } from "app/components";
 import { useAuth } from "app/hooks";
 
 export default function Home() {
-  const { user, error, isLoading } = useAuth();
-  console.log(user, error, isLoading);
+  const { user } = useAuth();
+  // console.log(user, isLoading);
 
   return (
     <div>
       <ul>
-        <li>Hello {user?.name}</li>
+        <li>Hello {user?.email}</li>
         <li>
           <Link href="/">Home</Link>
         </li>

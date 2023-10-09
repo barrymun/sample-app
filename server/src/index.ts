@@ -112,6 +112,11 @@ app.get("/authenticate", async (req, res) => {
   res.redirect("http://localhost:3000");
 });
 
+app.get("/session", authenticateRequest, async (req, res) => {
+  const reqWithUser = req as AuthenticatedRequest;
+  res.json(reqWithUser.user);
+});
+
 // This route doesn't need authentication
 app.get("/public", async (req, res) => {
   res.json({

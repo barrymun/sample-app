@@ -5,14 +5,14 @@ import { LoginButton } from "app/components";
 import { useAuth } from "app/hooks";
 
 export default function Login() {
-  const { user, error, isLoading } = useAuth();
+  const { user, isLoading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (!isLoading && !error && user) {
+    if (!isLoading && user) {
       router.push("/");
     }
-  }, [user, error, isLoading]);
+  }, [user, isLoading]);
 
   return <LoginButton />;
 }

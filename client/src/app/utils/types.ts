@@ -9,3 +9,7 @@ export type NextPageWithLayout<P = Record<string, never>, IP = P> = NextPage<P, 
 export type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
+
+export type UserProfile = {
+  email: string;
+};
