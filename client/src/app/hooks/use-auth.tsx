@@ -30,27 +30,27 @@ const AuthProvider = ({ children }: AuthProviderProps): ReactElement<AuthContext
     async () => {
       if (!user) return;
 
-      let r;
-      r = await fetch("http://localhost:3000/api/token");
-      const { token } = await r.json();
+      // let r;
+      // r = await fetch("http://localhost:3000/api/token");
+      // const { token } = await r.json();
 
-      r = await fetch("http://localhost:3001/authenticate", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        credentials: "include",
-      });
+      // r = await fetch("http://localhost:3001/authenticate", {
+      //   method: "POST",
+      //   headers: {
+      //     "content-type": "application/json",
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      //   credentials: "include",
+      // });
 
-      r = await fetch("http://localhost:3001/private", {
-        method: "GET",
-        headers: {
-          "content-type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        credentials: "include",
-      });
+      // r = await fetch("http://localhost:3001/private", {
+      //   method: "GET",
+      //   headers: {
+      //     "content-type": "application/json",
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      //   credentials: "include",
+      // });
 
       // const res = await getUserByEmail({ variables: { email: user.email } });
       // console.log(res.data?.email);
