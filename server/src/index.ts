@@ -117,6 +117,11 @@ app.get("/session", authenticateRequest, async (req, res) => {
   res.json(reqWithUser.user);
 });
 
+app.post("/logout", async (req, res) => {
+  res.clearCookie("auth");
+  res.status(200).send("Logged out");
+});
+
 // This route doesn't need authentication
 app.get("/public", async (req, res) => {
   res.json({

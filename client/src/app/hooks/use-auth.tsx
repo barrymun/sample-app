@@ -9,6 +9,7 @@ import { UserProfile } from "app/utils/types";
 
 type AuthContextProps = {
   user?: UserProfile;
+  setUser?: React.Dispatch<React.SetStateAction<UserProfile | undefined>>;
   isLoading?: boolean;
 };
 
@@ -50,20 +51,18 @@ const AuthProvider = ({ children }: AuthProviderProps): ReactElement<AuthContext
   }, []);
 
   useEffect(() => {
-    // we don't want to keep redirecting to login if we're already there
+    // don't want to keep redirecting to login if already there
     if (router.pathname === "/login") {
       return;
     }
-
+    // if not loading and we don't have a user, redirect to login
     if (!isLoading && !user) {
       router.push("/login");
     }
-
-    // getUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, isLoading]);
 
-  const authContextProviderValue = useMemo(() => ({ user, isLoading }), [user, isLoading]);
+  const authContextProviderValue = useMemo(() => ({ user, setUser, isLoading }), [user, setUser, isLoading]);
 
   return (
     <AuthContext.Provider value={authContextProviderValue}>{isLoading ? <Loading /> : children}</AuthContext.Provider>
