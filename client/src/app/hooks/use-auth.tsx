@@ -30,10 +30,11 @@ const AuthProvider = ({ children }: AuthProviderProps): ReactElement<AuthContext
     async () => {
       if (!user) return;
 
-      const r = await fetch("http://localhost:3000/api/token");
+      let r;
+      r = await fetch("http://localhost:3000/api/token");
       const { token } = await r.json();
 
-      await fetch("http://localhost:3001/authenticate", {
+      r = await fetch("http://localhost:3001/authenticate", {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -42,7 +43,7 @@ const AuthProvider = ({ children }: AuthProviderProps): ReactElement<AuthContext
         credentials: "include",
       });
 
-      await fetch("http://localhost:3001/private", {
+      r = await fetch("http://localhost:3001/private", {
         method: "GET",
         headers: {
           "content-type": "application/json",

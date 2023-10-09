@@ -98,8 +98,8 @@ app.post("/authenticate", async (req, res) => {
   const authToken = generateAuthToken(payload);
   res.cookie("auth", authToken, {
     httpOnly: true, // this will prevent the token from being accessed by JavaScript
-    // secure: process.env.NODE_ENV === 'production', // this will send the cookie over HTTPS only
-    maxAge: 3600000, // this sets the cookie to expire in 1 hour
+    secure: process.env.NODE_ENV === "production", // this will send the cookie over HTTPS only
+    sameSite: "lax",
   });
 
   res.status(200).send("OK");
