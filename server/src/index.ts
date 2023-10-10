@@ -8,9 +8,6 @@ import { privateRoute, publicRoute } from "routes/sample";
 import { initialiseRedis } from "utils/redis";
 import { initialiseSendgrid } from "utils/sendgrid";
 
-dotenv.config();
-initialiseSendgrid();
-
 const app = express();
 const corsOptions = {
   origin: "http://localhost:3000",
@@ -27,9 +24,14 @@ app.post("/logout", checkAuthenticated, logout);
 app.get("/public", publicRoute);
 app.get("/private", checkAuthenticated, privateRoute);
 
-app.listen(3001, async () => {
-  // redis
-  initialiseRedis();
+(async () => {
+  // initialise dependencies
+  dotenv.config();
+  initialiseSendgrid();
+  await initialiseRedis();
 
-  console.log("Listening on http://localhost:3001");
-});
+  // start the server
+  app.listen(3001, async () => {
+    console.log("Listening on http://localhost:3001");
+  });
+})();

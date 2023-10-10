@@ -3,7 +3,9 @@ import { createClient, type RedisClientType } from "redis";
 let redisClient: RedisClientType;
 
 const initialiseRedis = async () => {
-  redisClient = createClient();
+  redisClient = createClient({
+    url: "redis://redis:6379",
+  });
   redisClient.on("error", (err) => console.log("Redis Client Error", err));
   await redisClient.connect();
 };
