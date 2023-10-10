@@ -6,8 +6,8 @@
   "module": "index.ts",
   "scripts": {
     "build": "rm -rf dist && tsc --build",
-    "start": "ts-node -r tsconfig-paths/register dist/index.js",
-    "dev": "yarn run build && yarn run start"
+    "start-development": "NODE_ENV=development ts-node -r tsconfig-paths/register dist/index.js",
+    "start-production": "NODE_ENV=production ts-node -r tsconfig-paths/register dist/index.js"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.4",

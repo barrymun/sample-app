@@ -1,7 +1,9 @@
 import sgMail, { type MailDataRequired } from "@sendgrid/mail";
 
+import { config } from "utils/config";
+
 const initialiseSendgrid = async () => {
-  sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
+  sgMail.setApiKey(config.sendgrid.apiKey);
 };
 
 const sendMail = async (msg: MailDataRequired): Promise<boolean> => {

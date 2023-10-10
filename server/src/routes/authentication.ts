@@ -2,6 +2,7 @@ import crypto from "crypto";
 import type { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
+import { config, environment } from "utils/config";
 import { getVal, removeVal, setVal } from "utils/redis";
 import { sendMail } from "utils/sendgrid";
 import { AuthenticatedRequest } from "utils/types";
@@ -11,7 +12,7 @@ const generateRandomHash = (): string => {
 };
 
 const generateAuthToken = (email: string) => {
-  const token = jwt.sign({ email }, process.env.JWT_SECRET!);
+  const token = jwt.sign({ email }, config.jwt.secret);
   return token;
 };
 
@@ -22,7 +23,7 @@ const checkAuthenticated = (req: Request, res: Response, next: NextFunction) => 
   }
 
   try {
-    const verified = jwt.verify(token, process.env.JWT_SECRET!) as AuthenticatedRequest["user"];
+    const verified = jwt.verify(token, config.jwt.secret) as AuthenticatedRequest["user"];
     (req as unknown as AuthenticatedRequest).user = verified; // Add user payload to request object
     next(); // Proceed to the next middleware/route handler
   } catch (err) {
@@ -42,7 +43,7 @@ const sendEmail = async (req: Request, res: Response) => {
   const href = `http://localhost:3001/authenticate?emailToken=${emailToken}`;
   const msg = {
     to: email,
-    from: process.env.SENDGRID_EMAIL!,
+    from: config.sendgrid.from,
     subject: "Login",
     html: `Click <a href="${href}">here</a> to login`,
   };
@@ -67,8 +68,8 @@ const authenticate = async (req: Request, res: Response) => {
 
   const authToken = generateAuthToken(email);
   res.cookie("auth", authToken, {
-    httpOnly: true, // this will prevent the token from being accessed by JavaScript
-    secure: process.env.NODE_ENV === "production", // this will send the cookie over HTTPS only
+    httpOnly: true,
+    secure: environment !== "development",
     sameSite: "lax",
   });
 

@@ -8,14 +8,16 @@ WORKDIR /usr/src/app
 # Copy package.json and package-lock.json before other files
 # Utilize Docker cache to save re-installing dependencies if unchanged
 COPY package*.json /usr/src/app/
-
-# Install dependencies
-RUN yarn install
+COPY tsconfig.json /usr/src/app/
 
 # Copy local code to the container image
 COPY . /usr/src/app/
 
+# Install dependencies
+RUN yarn install
+RUN yarn build
+
 EXPOSE 3000
 
 # Specify the command to run on container start
-CMD [ "yarn", "start" ]
+CMD [ "yarn", "start-production" ]
