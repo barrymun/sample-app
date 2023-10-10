@@ -17,7 +17,7 @@ COPY . /usr/src/app/
 RUN yarn install
 RUN yarn build
 
-EXPOSE 3000
+EXPOSE 3001
 
 # Specify the command to run on container start
 CMD [ "yarn", "start-production" ]
