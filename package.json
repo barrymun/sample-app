@@ -13,7 +13,8 @@
     "pre-commit": "lint-staged",
     "client-dev": "yarn workspace client dev",
     "docker-up": "docker-compose up -d --build",
-    "docker-down": "docker-compose down -v",
+    "docker-down": "docker-compose down",
+    "docker-destroy": "docker-compose down -v",
     "codegen": "yarn workspace client graphql-codegen"
   },
   "lint-staged": {

@@ -46,6 +46,16 @@ services:
       JWT_SECRET: ${JWT_SECRET}
       SENDGRID_EMAIL: ${SENDGRID_EMAIL}
       SENDGRID_API_KEY: ${SENDGRID_API_KEY}
+  
+  client:
+    build:
+      context: ./client
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server
+    environment:
+      HASURA_GRAPHQL_ADMIN_SECRET: ${HASURA_GRAPHQL_ADMIN_SECRET}
 
 volumes:
   redis_data:
