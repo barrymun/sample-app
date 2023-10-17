@@ -12,6 +12,7 @@
     "prepare": "husky install",
     "pre-commit": "lint-staged",
     "client-dev": "yarn workspace client dev",
+    "server-build": "yarn workspace server build",
     "docker-up": "docker-compose up -d --build",
     "docker-down": "docker-compose down",
     "docker-destroy": "docker-compose down -v",
