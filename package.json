@@ -6,7 +6,7 @@
   "workspaces":[
     "client",
     "server",
-    "shared"
+    "common"
   ],
   "scripts": {
     "prepare": "husky install",
@@ -27,9 +27,9 @@
       "prettier --write server/src/**/*.ts",
       "eslint --fix --config server/.eslintrc.json server/src/**/*.ts"
     ],
-    "shared/src/**/*.ts": [
-      "prettier --write shared/src/**/*.ts",
-      "eslint --fix --config shared/.eslintrc.json shared/src/**/*.ts"
+    "common/src/**/*.ts": [
+      "prettier --write common/src/**/*.ts",
+      "eslint --fix --config common/.eslintrc.json common/src/**/*.ts"
     ]
   },
   "devDependencies": {
